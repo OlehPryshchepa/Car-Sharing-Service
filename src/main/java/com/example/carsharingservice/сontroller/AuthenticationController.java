@@ -1,4 +1,4 @@
-package com.example.carsharingservice.controller;
+package com.example.carsharingservice.сontroller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

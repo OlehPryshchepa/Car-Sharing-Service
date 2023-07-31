@@ -1,4 +1,4 @@
-package com.example.carsharingservice.controller;
+package com.example.carsharingservice.сontroller;
 
 import java.time.LocalDateTime;
 import org.springframework.web.bind.annotation.GetMapping;
