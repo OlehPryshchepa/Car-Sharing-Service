@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {
-    List<Rental> findAllByUser_Id(Long userId, PageRequest pageRequest);
+    List<Rental> findByUserIdAndActualReturnDateIsNull(Long userId);
 
-    List<Rental> findByActualReturnDateIsNullAndReturnDateLessThan(LocalDateTime date);
+    List<Rental> findByUserIdAndActualReturnDateIsNotNull(Long userId);
 }
