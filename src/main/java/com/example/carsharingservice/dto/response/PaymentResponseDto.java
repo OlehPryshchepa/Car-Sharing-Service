@@ -1,7 +1,6 @@
 package com.example.carsharingservice.dto.response;
 
 import com.example.carsharingservice.model.Payment;
-import com.example.carsharingservice.model.Rental;
 import java.math.BigDecimal;
 import lombok.Data;
 
