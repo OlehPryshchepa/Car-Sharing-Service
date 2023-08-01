@@ -27,7 +27,7 @@ public class Car {
     private CarType type;
     private int inventory;
     @Column(nullable = false)
-    private BigDecimal dailyFree;
+    private BigDecimal dailyFee;
 
     public enum CarType {
         SEDAN,
