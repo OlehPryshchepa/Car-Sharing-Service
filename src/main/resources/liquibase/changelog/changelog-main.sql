@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset CS5:create-tables
 
-CREATE TABLE User (
+CREATE TABLE Users (
                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
                       email VARCHAR(255) NOT NULL,
                       first_name VARCHAR(100) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE User (
                       role ENUM('MANAGER', 'CUSTOMER') NOT NULL
 );
 
-CREATE TABLE Car (
+CREATE TABLE Cars (
                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
                      model VARCHAR(255) NOT NULL,
                      brand VARCHAR(255) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Car (
                      daily_fee DECIMAL(10, 2) NOT NULL
 );
 
-CREATE TABLE Rental (
+CREATE TABLE Rentals (
                         id BIGINT PRIMARY KEY AUTO_INCREMENT,
                         rental_date DATE NOT NULL,
                         return_date DATE NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE Rental (
                         FOREIGN KEY (user_id) REFERENCES User (id)
 );
 
-CREATE TABLE Payment (
+CREATE TABLE Payments (
                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
                          status ENUM('PENDING', 'PAID') NOT NULL,
                          type ENUM('PAYMENT', 'FINE') NOT NULL,
