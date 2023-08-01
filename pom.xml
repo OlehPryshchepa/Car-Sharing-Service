@@ -22,7 +22,7 @@
             checkstyle.xml
         </maven.checkstyle.plugin.configLocation>
         <liquibase.version>4.23.0</liquibase.version>
-        <liquibase.propertyFile>src/main/resources/liquibase/liquibase.properties</liquibase.propertyFile>
+        <liquibase.propertyFile>src/main/resources/liquibase.properties</liquibase.propertyFile>
     </properties>
     <dependencies>
         <dependency>
