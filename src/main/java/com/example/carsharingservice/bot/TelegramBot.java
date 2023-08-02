@@ -2,9 +2,8 @@ package com.example.carsharingservice.bot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import javax.validation.constraints.NotNull;
-import com.example.carsharingservice.lib.Email;
-import com.example.carsharingservice.lib.EmailValidator;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,13 +55,22 @@ public class TelegramBot extends TelegramLongPollingBot {
         } else if (update.hasMessage()) {
             String userText = update.getMessage().getText();
             if (update.getMessage().getText().contains("@")) {
-                User user = userService.findByEmail(userText);
-                userChatId.put(user.getId(), chatId);
-                SendMessage message = SendMessage.builder()
-                        .chatId(chatId)
-                        .text("Hello " + user.getFirstName() + "!" + "\n"
-                                + "We can send you notifications now :) Stay tuned! ;)")
-                        .build();
+                Optional<User> userOptional = userService.findByEmail(userText);
+                SendMessage message = null;
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    userChatId.put(user.getId(), chatId);
+                    message = SendMessage.builder()
+                            .chatId(chatId)
+                            .text("Hello " + user.getFirstName() + "!" + "\n"
+                                    + "We can send you notifications now :) Stay tuned! ;)")
+                            .build();
+                } else {
+                    message = SendMessage.builder()
+                            .chatId(chatId)
+                            .text("Email is invalid.")
+                            .build();
+                }
                 try {
                     sendApiMethod(message);
                 } catch (TelegramApiException e) {
@@ -71,7 +79,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             } else {
                 SendMessage message = SendMessage.builder()
                         .chatId(chatId)
-                        .text("Please, enter correct email")
+                        .text("Please, enter correct email.")
                         .build();
                 try {
                     sendApiMethod(message);
