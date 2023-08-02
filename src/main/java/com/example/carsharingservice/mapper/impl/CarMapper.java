@@ -3,14 +3,12 @@ package com.example.carsharingservice.mapper.impl;
 
 import com.example.carsharingservice.dto.request.CarRequestDto;
 import com.example.carsharingservice.dto.response.CarResponseDto;
-import com.example.carsharingservice.mapper.RequestDtoMapper;
-import com.example.carsharingservice.mapper.ResponseDtoMapper;
+import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.Car;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CarMapper implements RequestDtoMapper<CarRequestDto, Car>,
-        ResponseDtoMapper<CarResponseDto, Car> {
+public class CarMapper implements DtoMapper<CarRequestDto, CarResponseDto, Car> {
     @Override
     public Car mapToModel(CarRequestDto dto) {
         Car car = new Car();
