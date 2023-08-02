@@ -7,12 +7,31 @@ import com.example.carsharingservice.dto.response.CarResponseDto;
 import com.example.carsharingservice.model.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-@Mapper(config = MapperConfig.class)
-public interface CarMapper {
-    @Mapping(target = "dailyFee", source = "dailyFee")
-    Car mapToModel(CarRequestDto dto);
+@Component
+public class CarMapper implements RequestDtoMapper<CarRequestDto, Car>,
+        ResponseDtoMapper<CarResponseDto, Car> {
+    @Override
+    public Car mapToModel(CarRequestDto dto) {
+        Car car = new Car();
+        car.setModel(dto.getModel());
+        car.setType(Car.CarType.valueOf((dto.getType().name())));
+        car.setInventory(dto.getInventory());
+        car.setBrand(dto.getBrand());
+        car.setDailyFee(dto.getDailyFee());
+        return car;
+    }
 
-    @Mapping(target = "dailyFee", source = "dailyFee")
-    CarResponseDto mapToDto(Car model);
+    @Override
+    public CarResponseDto mapToDto(Car car) {
+        CarResponseDto dto = new CarResponseDto();
+        dto.setId(car.getId());
+        dto.setInventory(car.getInventory());
+        dto.setBrand(car.getBrand());
+        dto.setModel(car.getModel());
+        dto.setType(car.getType());
+        dto.setDailyFee(car.getDailyFee());
+        return dto;
+    }
 }
