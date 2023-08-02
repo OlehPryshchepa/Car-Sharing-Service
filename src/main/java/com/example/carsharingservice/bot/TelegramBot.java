@@ -57,7 +57,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             if (update.getMessage().getText().contains("@")) {
                 Optional<User> userOptional = userService.findByEmail(userText);
                 SendMessage message = null;
-                if (userOptional.isPresent()) {
+                if (userOptional.isPresent() && userOptional.get().getRole().equals(User.Role.MANAGER)) {
                     User user = userOptional.get();
                     userChatId.put(user.getId(), chatId);
                     message = SendMessage.builder()
