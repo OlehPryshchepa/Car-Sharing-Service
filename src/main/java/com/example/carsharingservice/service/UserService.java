@@ -10,5 +10,7 @@ public interface UserService {
 
     User update(User user);
 
+    User update(Long id, User.Role role);
+
     Optional<User> findByEmail(String email);
 }

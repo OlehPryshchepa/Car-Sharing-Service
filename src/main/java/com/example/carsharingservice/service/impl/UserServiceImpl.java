@@ -4,6 +4,7 @@ import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.UserService;
 import java.util.Optional;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User update(Long id, User.Role role) {
+        User user = get(id);
+        user.setRoles(Set.of(role));
         return userRepository.save(user);
     }
 
