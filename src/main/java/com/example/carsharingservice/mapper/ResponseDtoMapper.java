@@ -1,5 +1,5 @@
 package com.example.carsharingservice.mapper;
 
-public interface ResponseDtoMapper<D, T> {
+public interface ResponseDtoMapper<T, D> {
     D mapToDto(T t);
 }
