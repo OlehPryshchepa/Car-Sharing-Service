@@ -15,6 +15,6 @@ public interface PaymentMapper {
     Payment mapToModel(PaymentRequestDto dto);
 
     @Mapping(target = "paymentAmount", source = "paymentAmount")
-    @Mapping(expression = "java(model.getRental().getId())", target = "rentalId")
-    PaymentResponseDto mapToDto(Payment model);
+    @Mapping(target = "rentalId", source = "payment.rental.id")
+    PaymentResponseDto toDto(Payment payment);
 }
