@@ -1,13 +1,14 @@
---liquibase formatted sql
---changeset CS5-create-payments:create-table
-
-CREATE TABLE `payments` (
-                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                          status ENUM('PENDING', 'PAID') NOT NULL,
-                          type ENUM('PAYMENT', 'FINE') NOT NULL,
-                          rentals_id BIGINT NOT NULL,
-                          session_url VARCHAR(255) NOT NULL,
-                          session_id VARCHAR(255) NOT NULL,
-                          amount_to_pay DECIMAL(10, 2) NOT NULL,
-                          FOREIGN KEY (rentals_id) REFERENCES rentals (id)
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE IF NOT EXISTS payments
+(
+    id            bigint NOT NULL AUTO_INCREMENT,
+    payment_status        VARCHAR(255) DEFAULT NULL,
+    payment_type          VARCHAR(255) DEFAULT NULL,
+    payment_url   VARCHAR(255) DEFAULT NULL,
+    payment_session_id    VARCHAR(255) DEFAULT NULL,
+    payment_amount DECIMAL      DEFAULT NULL,
+    rental_id bigint DEFAULT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT rental_fk FOREIGN KEY (rental_id) REFERENCES rentals (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;

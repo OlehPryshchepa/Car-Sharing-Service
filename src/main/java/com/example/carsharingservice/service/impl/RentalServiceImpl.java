@@ -20,7 +20,7 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public Rental save(Rental rental) {
         Car car = rental.getCar();
-        if(car.getInventory() == 0) {
+        if (car.getInventory() == 0) {
             throw new RuntimeException("Can't decrease car inventory: " + rental);
         }
         car.setInventory(car.getInventory() - 1);
