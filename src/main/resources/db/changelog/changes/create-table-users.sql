@@ -7,5 +7,5 @@ CREATE TABLE `users` (
                        first_name VARCHAR(100) NOT NULL,
                        last_name VARCHAR(100) NOT NULL,
                        password VARCHAR(255) NOT NULL,
-                       role ENUM('MANAGER', 'CUSTOMER') NOT NULL
+                       role VARCHAR(255) NOT NULL DEFAULT 'CUSTOMER'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
