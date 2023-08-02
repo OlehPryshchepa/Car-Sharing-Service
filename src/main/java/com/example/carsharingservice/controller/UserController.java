@@ -5,6 +5,7 @@ import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,7 @@ public class UserController {
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @PutMapping("/{id}/role")
+    @Operation(summary = "Update user role by user id")
     public UserResponseDto update(@PathVariable Long id) {
         User user = userService.get(id);
         return user.getRole() == User.Role.CUSTOMER
@@ -32,11 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/me")
+    @Operation(summary = "Get user profile info")
     public UserResponseDto get(Authentication authentication) {
         return userMapper.mapToDto(userService.findByEmail(authentication.getName()));
     }
 
     @PutMapping("/me")
+    @Operation(summary = "Update user profile info")
     public UserResponseDto updateProfile(Authentication authentication,
                                          @RequestBody UserRequestDto userRequestDto) {
         User userDB = userService.findByEmail(authentication.getName());
