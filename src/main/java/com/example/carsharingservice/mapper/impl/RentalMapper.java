@@ -5,6 +5,7 @@ import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
+import com.example.carsharingservice.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,9 +16,14 @@ public class RentalMapper implements DtoMapper<RentalRequestDto, RentalResponseD
         Car car = new Car();
         car.setId(dto.getCarId());
         Rental rental = new Rental();
+        User user = new User();
+        user.setId(dto.getUserId());
+
         rental.setCar(car);
         rental.setReturnDate(dto.getReturnDate());
         rental.setRentalDate(dto.getRentalDate());
+        rental.setActualReturnDate(dto.getActualReturnDate());
+        rental.setUser(user);
         return rental;
     }
 

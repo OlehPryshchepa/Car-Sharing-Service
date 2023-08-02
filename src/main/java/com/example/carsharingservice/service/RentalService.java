@@ -1,6 +1,7 @@
 package com.example.carsharingservice.service;
 
 import com.example.carsharingservice.model.Rental;
+
 import java.util.List;
 
 public interface RentalService {
@@ -11,5 +12,5 @@ public interface RentalService {
 
     List<Rental> findByUSerId(Long id, boolean isActive);
 
-    void updateActualReturnDate(Long id);
+    void returnCar(Long id);
 }
