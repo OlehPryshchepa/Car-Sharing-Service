@@ -1,7 +1,6 @@
 package com.example.carsharingservice.service;
 
 import com.example.carsharingservice.model.User;
-import java.util.Optional;
 
 public interface UserService {
     User add(User user);
@@ -12,5 +11,5 @@ public interface UserService {
 
     User update(Long id, User.Role role);
 
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 }
