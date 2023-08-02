@@ -1,13 +1,10 @@
 package com.example.carsharingservice.mapper;
 
-import com.example.carsharingservice.config.MapperConfig;
 import com.example.carsharingservice.dto.request.PaymentRequestDto;
 import com.example.carsharingservice.dto.response.PaymentResponseDto;
 import com.example.carsharingservice.model.Payment;
 import com.example.carsharingservice.model.Rental;
 import lombok.AllArgsConstructor;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
