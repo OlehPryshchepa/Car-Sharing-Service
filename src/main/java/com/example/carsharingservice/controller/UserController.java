@@ -2,8 +2,7 @@ package com.example.carsharingservice.controller;
 
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
-import com.example.carsharingservice.mapper.RequestDtoMapper;
-import com.example.carsharingservice.mapper.ResponseDtoMapper;
+import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -20,27 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    private final ResponseDtoMapper<UserResponseDto, User> responseDtoMapper;
-    private final RequestDtoMapper<UserRequestDto, User> requestDtoMapper;
+    private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @PutMapping("/{id}/role")
     public UserResponseDto update(@PathVariable Long id) {
         User user = userService.get(id);
         return user.getRole() == User.Role.CUSTOMER
-                ? responseDtoMapper.mapToDto(userService.update(id, User.Role.MANAGER))
-                : responseDtoMapper.mapToDto(userService.update(id, User.Role.CUSTOMER));
+                ? userMapper.mapToDto(userService.update(id, User.Role.MANAGER))
+                : userMapper.mapToDto(userService.update(id, User.Role.CUSTOMER));
     }
 
     @GetMapping("/me")
     public UserResponseDto get(Authentication authentication) {
-        return responseDtoMapper.mapToDto(userService.findByEmail(authentication.getName()));
+        return userMapper.mapToDto(userService.findByEmail(authentication.getName()));
     }
 
+    //not tested
     @PutMapping("/me")
     public UserResponseDto updateProfile(Authentication authentication,
                                 @RequestBody UserRequestDto userRequestDto) {
-        User user = requestDtoMapper.mapToModel(userRequestDto);
+        User user = userMapper.mapToModel(userRequestDto);
         user.setId(userService.findByEmail(authentication.getName()).getId());
-        return responseDtoMapper.mapToDto(userService.update(user));
+        return userMapper.mapToDto(userService.update(user));
     }
 }
