@@ -1,7 +1,9 @@
-package com.example.carsharingservice.mapper;
+package com.example.carsharingservice.mapper.impl;
 
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
+import com.example.carsharingservice.mapper.RequestDtoMapper;
+import com.example.carsharingservice.mapper.ResponseDtoMapper;
 import com.example.carsharingservice.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
