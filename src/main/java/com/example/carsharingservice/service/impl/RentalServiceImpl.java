@@ -45,7 +45,7 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void updateActualReturnDate(Long id) {
+    public void returnCar(Long id) {
         Rental rentalToUpdate = find(id);
         Car car = rentalToUpdate.getCar();
         car.setInventory(car.getInventory() + 1);
