@@ -19,8 +19,10 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Rental save(Rental rental) {
-        Car car = rental.getCar();
-        if(car.getInventory() == 0) {
+        Car car = carRepository.findById(rental.getCar().getId()).orElseThrow(() ->
+                new RuntimeException("Can't find car by id:" + rental.getCar().getId()));
+        rental.setCar(car);
+        if (car.getInventory() == 0) {
             throw new RuntimeException("Can't decrease car inventory: " + rental);
         }
         car.setInventory(car.getInventory() - 1);
@@ -43,7 +45,7 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public void updateActualReturnDate(Long id) {
+    public void returnCar(Long id) {
         Rental rentalToUpdate = find(id);
         Car car = rentalToUpdate.getCar();
         car.setInventory(car.getInventory() + 1);
