@@ -31,19 +31,14 @@ public class UserController {
 
     @GetMapping("/me")
     public UserResponseDto get(Authentication authentication) {
-        User user = userService.findByEmail(authentication.getName()).orElseThrow(
-                () -> new RuntimeException("Invalid email "
-                        + authentication.getName()));
-        return userMapper.mapToDto(user);
+        return userMapper.mapToDto(userService.findByEmail(authentication.getName()));
     }
 
     @PutMapping("/me")
     public UserResponseDto updateProfile(Authentication authentication,
                                 @RequestBody UserRequestDto userRequestDto) {
         User user = userMapper.mapToModel(userRequestDto);
-        user.setId(userService.findByEmail(authentication.getName()).orElseThrow(
-                () -> new RuntimeException("Invalid email "
-                        + authentication.getName())).getId());
+        user.setId(userService.findByEmail(authentication.getName()).getId());
         return userMapper.mapToDto(userService.update(user));
     }
 }
