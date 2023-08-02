@@ -5,16 +5,20 @@ import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.service.RentalService;
-import com.example.carsharingservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
@@ -24,7 +28,6 @@ import java.util.List;
         + "Contains all the operations that can be performed on a customer/manager.")
 public class RentalController {
     private final RentalService rentalService;
-    private final UserService userService;
     private final DtoMapper <RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
 
     @Operation(summary = "Add rental", description = "Add rental")
@@ -50,6 +53,7 @@ public class RentalController {
     public List<RentalResponseDto> getRentalsByUserIdAndStatus(
             @RequestParam(name = "user_id") Long id,
             @RequestParam(name = "is_active") boolean isActive,
+            //TODO implement Pagination
             @RequestParam(defaultValue = "20") Integer count,
             @RequestParam(defaultValue = "0") Integer page) {
         Pageable pageRequest = PageRequest.of(page, count);
@@ -66,11 +70,8 @@ public class RentalController {
     }
 
     @Operation(summary = "Set actual return date ", description = "Set actual return date ")
-    @PostMapping("/{id}/return")
-    public void returnCar(@PathVariable Long id,
-                                       @RequestBody RentalRequestDto rentalRequestDto) {
-        rentalService
-                .returnCar(id);
-
+    @PostMapping("/return/{id}")
+    public void returnCar(@PathVariable Long id) {
+        rentalService.returnCar(id);
     }
 }

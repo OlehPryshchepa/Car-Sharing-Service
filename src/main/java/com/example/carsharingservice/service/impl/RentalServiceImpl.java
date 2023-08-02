@@ -6,10 +6,8 @@ import com.example.carsharingservice.repository.CarRepository;
 import com.example.carsharingservice.repository.RentalRepository;
 import com.example.carsharingservice.service.RentalService;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +19,9 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Rental save(Rental rental) {
-        Car car = rental.getCar();
+        Car car = carRepository.findById(rental.getCar().getId()).orElseThrow(() ->
+                new RuntimeException("Can't find car by id:" + rental.getCar().getId()));
+        rental.setCar(car);
         if (car.getInventory() == 0) {
             throw new RuntimeException("Can't decrease car inventory: " + rental);
         }
