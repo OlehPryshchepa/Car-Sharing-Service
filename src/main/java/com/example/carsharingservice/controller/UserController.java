@@ -5,12 +5,13 @@ import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @PutMapping("/{id}/role")
@@ -34,12 +36,22 @@ public class UserController {
         return userMapper.mapToDto(userService.findByEmail(authentication.getName()));
     }
 
-    //not tested
     @PutMapping("/me")
     public UserResponseDto updateProfile(Authentication authentication,
-                                @RequestBody UserRequestDto userRequestDto) {
-        User user = userMapper.mapToModel(userRequestDto);
-        user.setId(userService.findByEmail(authentication.getName()).getId());
-        return userMapper.mapToDto(userService.update(user));
+                                         @RequestBody UserRequestDto userRequestDto) {
+        User userDB = userService.findByEmail(authentication.getName());
+        User userUpdate = userMapper.mapToModel(userRequestDto);
+        userUpdate.setId(userDB.getId());
+        userUpdate.setEmail(userUpdate.getEmail() == null
+                ? userDB.getEmail() : userUpdate.getEmail());
+        userUpdate.setFirstName(userUpdate.getFirstName() == null
+                ? userDB.getFirstName() : userUpdate.getFirstName());
+        userUpdate.setLastName(userUpdate.getLastName() == null
+                ? userDB.getLastName() : userUpdate.getLastName());
+        userUpdate.setPassword(userUpdate.getPassword() == null
+                ? userDB.getPassword() : passwordEncoder.encode(userUpdate.getPassword()));
+        userUpdate.setRole(userUpdate.getRole() == null
+                ? userDB.getRole() : userUpdate.getRole());
+        return userMapper.mapToDto(userService.update(userUpdate));
     }
 }
