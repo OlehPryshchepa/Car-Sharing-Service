@@ -36,6 +36,7 @@ public class UserController {
         return responseDtoMapper.mapToDto(userService.findByEmail(authentication.getName()));
     }
 
+    //not tested
     @PutMapping("/me")
     public UserResponseDto updateProfile(Authentication authentication,
                                 @RequestBody UserRequestDto userRequestDto) {
