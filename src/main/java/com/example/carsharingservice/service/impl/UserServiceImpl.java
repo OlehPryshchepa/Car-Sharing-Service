@@ -1,5 +1,6 @@
 package com.example.carsharingservice.service.impl;
 
+import java.util.Optional;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.UserRepository;
 import com.example.carsharingservice.service.UserService;
@@ -38,8 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("Invalid email " + email));
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

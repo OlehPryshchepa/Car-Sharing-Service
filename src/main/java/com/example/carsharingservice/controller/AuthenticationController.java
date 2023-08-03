@@ -3,11 +3,14 @@ package com.example.carsharingservice.controller;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import com.example.carsharingservice.dto.request.UserLoginDto;
+import com.example.carsharingservice.dto.request.UserRegistrationDto;
 import com.example.carsharingservice.dto.request.UserRequestDto;
 import com.example.carsharingservice.dto.response.UserResponseDto;
 import com.example.carsharingservice.exception.AuthenticationException;
 import com.example.carsharingservice.mapper.DtoMapper;
 import com.example.carsharingservice.model.User;
+import com.example.carsharingservice.security.jwt.JwtTokenProvider;
 import com.example.carsharingservice.service.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,9 @@ public class AuthenticationController {
     private final DtoMapper<UserRequestDto, UserResponseDto, User> userMapper;
 
     @PostMapping("/register")
-    public UserResponseDto register(@RequestBody UserRequestDto requestDto) {
-        User user = authService.register(requestDto.getEmail(), requestDto.getFirstName(), requestDto.getLastName(), requestDto.getPassword());
+    public UserResponseDto register(@RequestBody UserRegistrationDto request) {
+        User user = authService.register(request.getEmail(), request.getFirstName(),
+                request.getLastName(), request.getPassword());
         return userMapper.mapToDto(user);
     }
 
