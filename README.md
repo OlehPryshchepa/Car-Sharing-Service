@@ -81,6 +81,10 @@ Notifications come when leases are created, leases are overdue, and payments are
 - Run the application: npm start or yarn start.
   You can test the operation of the application using swagger using
   address `http://localhost:8080/swagger-ui/index.html#/`
+  
+#### Test Data
+- Telegram bot: CSTeam3NotificationBot
+- When testing stripe, use a card number, such as 4242 4242 4242 4242
 
 ### 🛠 Technologies 🛠
 * Java `17`
