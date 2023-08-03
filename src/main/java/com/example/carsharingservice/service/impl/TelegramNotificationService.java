@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.example.carsharingservice.service.NotificationService;
 import com.example.carsharingservice.service.UserService;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -67,15 +68,16 @@ public class TelegramNotificationService extends TelegramLongPollingBot implemen
     }
 
     private void handleUserInput(Long chatId, String userEmail) {
-        User user = userService.findByEmail(userEmail);
+        Optional<User> userOptional = userService.findByEmail(userEmail);
         SendMessage message;
 
-        if (user != null) {
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             user.setChatId(chatId);
             userService.update(user);
             message = SendMessage.builder()
                     .chatId(chatId)
-                    .text("Hello " + user.getFirstName() + "!\n"
+                    .text("Hello " + userOptional.get().getFirstName() + "!\n"
                             + "We can send you notifications now :) Stay tuned! ;)")
                     .build();
         } else {
