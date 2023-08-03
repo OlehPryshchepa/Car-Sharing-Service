@@ -36,32 +36,7 @@ work of the service administrators and greatly enhance the user experience.
   performing business logic and coordinating the interactions between the controllers and the DAO.
 - `telegrambot` - this package contains Telegram bot settings.
 
-#### User (Customer)
-
-- `email`
-- `firstName`
-- `lastName`
-- `password`
-- `role` (Enum: `MANAGER` | `CUSTOMER`)
-
-#### Rental
-
-- `rentalDate`
-- `returnDate`
-- `actualReturnDate`
-- `carId`
-- `userId`
-
-#### Payment
-
-- `paymentStatus` (Enum: `PENDING` | `PAID`)
-- `paymentType`: (Enum: `PAYMENT` | `FINE`)
-- `rental`
-- `paymentUrl`
-- `paymentSessionId`
-- `paymentAmount`
-
-### Controllers
+## 🚀Features
 
 - Authentication Controller
     - POST: `/register` - register a new user
@@ -96,23 +71,11 @@ work of the service administrators and greatly enhance the user experience.
 In this project, we notify clients and managers using a Telegram bot.
 Notifications come when leases are created, leases are overdue, and payments are successful.
 
-## Getting Started
-
-## 💻How to Run and Test with Docker
-⚠️Important: You must have Docker installed. If it is not installed, please download it from the website [link](https://www.docker.com/products/docker-desktop/) and proceed with the installation.
-
-* Clone the repo on GitHub
-* Run docker client
-* Build the project: `mvn clean package`
-* In the terminal, run the command: `docker-compose up`
-* Use the address `http://localhost:6868/swagger-ui/index.html#/` to access the documentation.
-
-#### To get started with the car-sharing service, follow these steps:
-
-- Clone the repository
+## 💻How to Run and Test project
+- Clone the repo on GitHub
 - You need to get a token to create a Telegram-bot `https://t.me/BotFather`
+- Register on [Stripe](https://stripe.com/)
 - Set your credentials in `application.properties`
-- Set up the necessary environment variables. Refer to `.env` for the required variables
 - Build the project: mvn compile
 - Run the application: npm start or yarn start.
   You can test the operation of the application using swagger using
@@ -121,15 +84,12 @@ Notifications come when leases are created, leases are overdue, and payments are
 ## 🛠 Technologies 🛠
 * Java `17`
 * Apache Maven `3.10.1`
-* Apache Tomcat  `9.0.73`
-* PostgreSQL `42.5.4`
 * Spring:
     * Boot `3.0.6`
     * Data Jpa `3.0.6`
     * Web Mvc `6.0.8`
 * Liquibase-core `4.17.2`
 * lombok `1.18.26`
-* Hibernate `6.1.7.Final`
 * Swagger UI
 * SpringDoc `2.1.0`
 * Checkstyle Plugin `3.1.1`
