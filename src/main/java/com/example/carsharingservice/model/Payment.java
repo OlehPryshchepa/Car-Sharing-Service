@@ -34,9 +34,7 @@ public class Payment {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Rental rental;
-    @Column(nullable = false)
     private String paymentUrl;
-    @Column(nullable = false)
     private String paymentSessionId;
     @Column(nullable = false)
     private BigDecimal paymentAmount;
