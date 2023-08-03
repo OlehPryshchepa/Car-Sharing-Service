@@ -34,17 +34,18 @@ public class UserController {
 
     @PutMapping("/{id}/role")
     @Operation(summary = "Update user role by user id",
-    description = "The method updates the user role by its unique identifier. "
-            + "It checks the user's current role and changes it to the opposite "
-            + "(if the user is \"CUSTOMER\", then the role becomes \"MANAGER\", "
-            + "and vice versa). The result of the method is a UserResponseDto "
-            + "object with updated information about the user.")
+            description = "The method updates the user role by its unique identifier. "
+                    + "It checks the user's current role and changes it to the opposite "
+                    + "(if the user is \"CUSTOMER\", then the role becomes \"MANAGER\", "
+                    + "and vice versa). The result of the method is a UserResponseDto "
+                    + "object with updated information about the user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
                     content = {@Content(schema = @Schema(implementation = User.class),
                             mediaType = "application/json")})
     })
-    public UserResponseDto update(@Parameter(description = "Press the button \"Try it out\" and put user id to update")
+    public UserResponseDto update(@Parameter(
+            description = "Press the button \"Try it out\" and put user id to update")
                                       @PathVariable Long id) {
         User user = userService.get(id);
         return user.getRole() == User.Role.CUSTOMER
@@ -54,10 +55,11 @@ public class UserController {
 
     @GetMapping("/me")
     @Operation(summary = "Get user profile info",
-            description = "The method retrieves the profile information of the"
-                    + " currently authenticated user. It uses the email from the "
-                    + "authentication object to fetch the corresponding user from the"
-                    + " database and returns a UserResponseDto containing the user's profile details.")
+            description = "The method retrieves the profile information of the "
+                    + "currently authenticated user. It uses the email from the "
+                    + "authentication object to fetch the corresponding user "
+                    + "from the database and returns a UserResponseDto containing "
+                    + "the user's profile details.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
                     content = {@Content(schema = @Schema(implementation = User.class),
@@ -70,9 +72,9 @@ public class UserController {
     @PutMapping("/me")
     @Operation(summary = "Update user profile info",
             description = "The method allows the currently authenticated user to update "
-                    + "their profile information. It takes a UserRequestDto containing the updated "
-                    + "profile data and updates the relevant fields in the user entity. The updated "
-                    + "user profile is then returned as a UserResponseDto.")
+                    + "their profile information. It takes a UserRequestDto containing "
+                    + "the updated profile data and updates the relevant fields in the user "
+                    + "entity. The updated user profile is then returned as a UserResponseDto.")
     @ApiResponses({
             @ApiResponse(responseCode = "200",
                     content = {@Content(schema = @Schema(implementation = User.class),
@@ -80,8 +82,9 @@ public class UserController {
     })
     public UserResponseDto updateProfile(Authentication authentication,
                                          @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                                                 description = "Here you need to specify the fields that need "
-                                                         + "to be updated in json format")
+                                                 description = "Here you need to specify "
+                                                         + "the fields that need to be "
+                                                         + "updated in json format")
                                          @RequestBody UserRequestDto userRequestDto) {
         User userDB = userService.findByEmail(authentication.getName());
         User userUpdate = userMapper.mapToModel(userRequestDto);
