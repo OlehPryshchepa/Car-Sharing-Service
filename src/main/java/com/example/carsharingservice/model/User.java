@@ -28,6 +28,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @Column(name = "chat_id")
+    private Long chatId;
 
     public enum Role {
         MANAGER,
