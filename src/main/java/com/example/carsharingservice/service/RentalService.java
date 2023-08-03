@@ -12,5 +12,5 @@ public interface RentalService {
 
     List<Rental> findByUSerId(Long id, boolean isActive);
 
-    void returnCar(Long id);
+    Rental returnCar(Long id);
 }
