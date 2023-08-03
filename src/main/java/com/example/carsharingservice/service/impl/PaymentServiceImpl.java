@@ -1,9 +1,11 @@
 package com.example.carsharingservice.service.impl;
 
 import com.example.carsharingservice.model.Payment;
+import com.example.carsharingservice.model.Rental;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.repository.PaymentRepository;
 import com.example.carsharingservice.service.PaymentService;
+import com.example.carsharingservice.service.RentalService;
 import com.example.carsharingservice.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,15 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final TelegramNotificationService telegramNotificationService;
     private final UserService userService;
+    private final RentalService rentalService;
 
     @Override
     public Payment save(Payment payment) {
         Payment save = paymentRepository.save(payment);
-        User user = userService.get(payment.getRental().getUser().getId());
+        Rental rental = rentalService.find(payment.getRental().getId());
+        User user = userService.get(rental.getUser().getId());
+        rental.setUser(user);
+        payment.setRental(rental);
         createNotification(payment, user);
         return save;
     }
