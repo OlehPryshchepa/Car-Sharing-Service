@@ -2,7 +2,6 @@ package com.example.carsharingservice.bot;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import javax.validation.constraints.NotNull;
 import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.service.UserService;
@@ -54,38 +53,25 @@ public class TelegramBot extends TelegramLongPollingBot {
             }
         } else if (update.hasMessage()) {
             String userText = update.getMessage().getText();
-            if (update.getMessage().getText().contains("@")) {
-                Optional<User> userOptional = userService.findByEmail(userText);
-                SendMessage message = null;
-                if (userOptional.isPresent() && userOptional.get().getRole().equals(User.Role.MANAGER)) {
-                    User user = userOptional.get();
-                    userChatId.put(user.getId(), chatId);
-                    message = SendMessage.builder()
-                            .chatId(chatId)
-                            .text("Hello " + user.getFirstName() + "!" + "\n"
-                                    + "We can send you notifications now :) Stay tuned! ;)")
-                            .build();
-                } else {
-                    message = SendMessage.builder()
-                            .chatId(chatId)
-                            .text("Email is invalid.")
-                            .build();
-                }
-                try {
-                    sendApiMethod(message);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException("Can't send a message", e);
-                }
-            } else {
-                SendMessage message = SendMessage.builder()
+            User user = userService.findByEmail(userText);
+            SendMessage message = null;
+            if (user != null && user.getRole().equals(User.Role.MANAGER)) {
+                userChatId.put(user.getId(), chatId);
+                message = SendMessage.builder()
                         .chatId(chatId)
-                        .text("Please, enter correct email.")
+                        .text("Hello " + user.getFirstName() + "!" + "\n"
+                                + "We can send you notifications now :) Stay tuned! ;)")
                         .build();
-                try {
-                    sendApiMethod(message);
-                } catch (TelegramApiException e) {
-                    throw new RuntimeException("Can't send a message", e);
-                }
+            } else {
+                message = SendMessage.builder()
+                        .chatId(chatId)
+                        .text("Email is invalid.")
+                        .build();
+            }
+            try {
+                sendApiMethod(message);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException("Can't send a message", e);
             }
         }
     }
