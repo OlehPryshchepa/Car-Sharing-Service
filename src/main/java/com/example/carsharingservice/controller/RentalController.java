@@ -53,11 +53,10 @@ public class RentalController {
     public List<RentalResponseDto> getRentalsByUserIdAndStatus(
             @RequestParam(name = "user_id") Long id,
             @RequestParam(name = "is_active") boolean isActive,
-            //TODO implement Pagination
             @RequestParam(defaultValue = "20") Integer count,
             @RequestParam(defaultValue = "0") Integer page) {
-        Pageable pageRequest = PageRequest.of(page, count);
-        return rentalService.findByUSerId(id, isActive)
+        PageRequest pageRequest = PageRequest.of(page, count);
+        return rentalService.findByUSerId(id, isActive, pageRequest)
                 .stream()
                 .map(rentalMapper::mapToDto)
                 .toList();
