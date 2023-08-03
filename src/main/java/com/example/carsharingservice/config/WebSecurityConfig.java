@@ -1,8 +1,10 @@
 package com.example.carsharingservice.config;
 
+import com.example.carsharingservice.model.User;
 import com.example.carsharingservice.security.jwt.JwtConfigurer;
 import com.example.carsharingservice.security.jwt.JwtTokenFilter;
 import com.example.carsharingservice.security.jwt.JwtTokenProvider;
+import javax.ws.rs.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -44,6 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v3/api-docs/**",
                         "/webjars/**").permitAll()
                 .antMatchers("/login", "/register", "/payments/success/*").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/cars/*", "/users/*")
+                .hasRole(User.Role.MANAGER.name())
+                .antMatchers(HttpMethod.PUT, "/users/**/role").hasRole(User.Role.MANAGER.name())
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
