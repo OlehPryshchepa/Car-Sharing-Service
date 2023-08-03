@@ -2,7 +2,7 @@
    🚘 CAR SHARING SERVICE (group project)🚘
 </h1>
 
-## 📄 Project Description
+### 📄 Project Description
 
 In this project, we aim to address the existing problems in the car-sharing service of your city. The current system relies on manual management, paper records, and lacks essential features such as real-time car availability tracking, electronic payments, and user accountability for returning cars on time. To solve these issues, we will introduce a modern and efficient system that automates processes, enables real-time tracking, and supports electronic payments for rental usage. This will bring significant improvements to the overall user experience and streamline the car-sharing service's operations.
 
@@ -10,7 +10,7 @@ The main task of the project is the implementation of an online car rental manag
 streamline the
 work of the service administrators and greatly enhance the user experience.
 
-## 🛠 Functional (what the system should do)
+### 🛠 Functional (what the system should do)
 
 - Web-based
 - Manage car sharing inventory
@@ -20,7 +20,7 @@ work of the service administrators and greatly enhance the user experience.
 - Handle payments
 - Telegram notification
 
-## Architecture
+### Architecture
 
 - `config` - this package contains configuration files.
 - `controller` - this package contains the controllers.
@@ -37,7 +37,7 @@ work of the service administrators and greatly enhance the user experience.
   performing business logic and coordinating the interactions between the controllers and the DAO.
 - `telegrambot` - this package contains Telegram bot settings.
 
-## 🚀Features
+### 🚀Features
 
 - Authentication Controller
     - POST: `/register` - register a new user
@@ -67,12 +67,12 @@ work of the service administrators and greatly enhance the user experience.
     - GET:    `/payments/success`    - check successful Stripe payments (Endpoint for stripe redirection)
     - GET:    `/payments/cancel`    - return payment paused message
 
-## Telegram notifications
+### Telegram notifications
 
 In this project, we notify clients and managers using a Telegram bot.
 Notifications come when leases are created, leases are overdue, and payments are successful.
 
-## 💻How to Run and Test project
+### 💻How to Run and Test project
 - Clone the repo on GitHub
 - You need to get a token to create a Telegram-bot `https://t.me/BotFather`
 - Register on [Stripe](https://stripe.com/)
@@ -82,7 +82,7 @@ Notifications come when leases are created, leases are overdue, and payments are
   You can test the operation of the application using swagger using
   address `http://localhost:8080/swagger-ui/index.html#/`
 
-## 🛠 Technologies 🛠
+### 🛠 Technologies 🛠
 * Java `17`
 * Apache Maven `3.10.1`
 * Spring:
@@ -95,12 +95,12 @@ Notifications come when leases are created, leases are overdue, and payments are
 * SpringDoc `2.1.0`
 * Checkstyle Plugin `3.1.1`
 
-## Conclusions
+### Conclusions
 
 By implementing these features in an online car rental management system, the service can automate processes,
 provide real-time information, and offer a more convenient and efficient experience for both users and administrators.
 
-## Our team Contacts
+### Our team Contacts
 If you have any questions or suggestions, please feel free to contact us:
 
 * Serhii Mykhliuk(mentor): [GitHub](https://github.com/maxline) |  [LinkedIn](https://www.linkedin.com/in/seleon000/)
