@@ -34,21 +34,12 @@ public class RentalController {
     private final RentalService rentalService;
     private final UserService userService;
     private final CarService carService;
-    private final TelegramNotificationService telegramNotificationService;
     private final DtoMapper <RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
 
     @Operation(summary = "Add rental", description = "Add rental")
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.save(rentalMapper.mapToModel(rentalRequestDto));
-        Car car = carService.get(createdRental.getCar().getId());
-        User user = userService.get(createdRental.getUser().getId());
-        telegramNotificationService.sendTelegramMessage(user, String
-                .format(
-                        "New rental was created.\n"
-                                + "Rental info: %s\n"
-                                + "User info: %s\n"
-                                + "Car info: %s", createdRental, user, car));
         return rentalMapper.mapToDto(createdRental);
     }
 
