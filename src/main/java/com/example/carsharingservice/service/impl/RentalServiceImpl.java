@@ -39,18 +39,18 @@ public class RentalServiceImpl implements RentalService {
     @Override
     public List<Rental> findByUSerId(Long id, boolean isActive) {
         if (isActive) {
-            return rentalRepository.findByUserIdAndActualReturnDateIsNotNull(id);
+            return rentalRepository.findByUserIdAndActualReturnDateIsNull(id);
         }
-        return rentalRepository.findByUserIdAndActualReturnDateIsNull(id);
+        return rentalRepository.findByUserIdAndActualReturnDateIsNotNull(id);
     }
 
     @Override
-    public void returnCar(Long id) {
+    public Rental returnCar(Long id) {
         Rental rentalToUpdate = find(id);
         Car car = rentalToUpdate.getCar();
         car.setInventory(car.getInventory() + 1);
         carRepository.save(car);
         rentalToUpdate.setActualReturnDate(LocalDateTime.now());
-        rentalRepository.save(rentalToUpdate);
+        return rentalRepository.save(rentalToUpdate);
     }
 }
