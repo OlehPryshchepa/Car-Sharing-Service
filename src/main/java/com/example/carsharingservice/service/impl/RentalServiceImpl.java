@@ -8,6 +8,7 @@ import com.example.carsharingservice.service.RentalService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,11 +37,11 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public List<Rental> findByUSerId(Long id, boolean isActive) {
+    public List<Rental> findByUSerId(Long id, boolean isActive, PageRequest request) {
         if (isActive) {
-            return rentalRepository.findByUserIdAndActualReturnDateIsNull(id);
+            return rentalRepository.findByUserIdAndActualReturnDateIsNull(id, request);
         }
-        return rentalRepository.findByUserIdAndActualReturnDateIsNotNull(id);
+        return rentalRepository.findByUserIdAndActualReturnDateIsNotNull(id, request);
     }
 
     @Override
