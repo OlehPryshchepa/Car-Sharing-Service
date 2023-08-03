@@ -1,6 +1,7 @@
 package com.example.carsharingservice.service;
 
 import com.example.carsharingservice.model.Rental;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface RentalService {
 
     Rental find(Long id);
 
-    List<Rental> findByUSerId(Long id, boolean isActive);
+    List<Rental> findByUSerId(Long id, boolean isActive, PageRequest request);
 
-    void returnCar(Long id);
+    Rental returnCar(Long id);
 }

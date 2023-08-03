@@ -25,7 +25,6 @@ public class Rental {
     private LocalDateTime rentalDate;
     @Column(nullable = false)
     private LocalDateTime returnDate;
-    @Column(nullable = false)
     private LocalDateTime actualReturnDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")

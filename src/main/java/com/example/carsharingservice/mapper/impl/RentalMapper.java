@@ -22,7 +22,6 @@ public class RentalMapper implements DtoMapper<RentalRequestDto, RentalResponseD
         rental.setCar(car);
         rental.setReturnDate(dto.getReturnDate());
         rental.setRentalDate(dto.getRentalDate());
-        rental.setActualReturnDate(dto.getActualReturnDate());
         rental.setUser(user);
         return rental;
     }

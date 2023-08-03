@@ -36,14 +36,16 @@ public class UserController {
     @GetMapping("/me")
     @Operation(summary = "Get user profile info")
     public UserResponseDto get(Authentication authentication) {
-        return userMapper.mapToDto(userService.findByEmail(authentication.getName()));
+        return userMapper.mapToDto(userService.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("We couldn't find a user with the email address: " + authentication.getName())));
     }
 
     @PutMapping("/me")
     @Operation(summary = "Update user profile info")
     public UserResponseDto updateProfile(Authentication authentication,
                                          @RequestBody UserRequestDto userRequestDto) {
-        User userDB = userService.findByEmail(authentication.getName());
+        User userDB = userService.findByEmail(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("We couldn't find a user with the email address: " + authentication.getName()));
         User userUpdate = userMapper.mapToModel(userRequestDto);
         userUpdate.setId(userDB.getId());
         userUpdate.setEmail(userUpdate.getEmail() == null
