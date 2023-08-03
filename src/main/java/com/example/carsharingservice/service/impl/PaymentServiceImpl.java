@@ -34,11 +34,11 @@ public class PaymentServiceImpl implements PaymentService {
 
     private void createNotification(Payment payment, User user) {
         telegramNotificationService.sendTelegramMessage(user, "New payment created:"
-                + " Payment ID - " + payment.getId() +
+                + " Payment ID - " + payment.getId() + "\n" +
                 ", User - " + user.getFirstName() + " " + user.getLastName() +
                 ", Car ID- " + payment.getRental().getCar().getId() +
                 ", Car model " + payment.getRental().getCar().getModel() +
-                ", Car brand " + payment.getRental().getCar().getBrand() +
+                ", Car brand " + payment.getRental().getCar().getBrand() + "\n" +
                 ", Rental ID - " + payment.getRental().getId() +
                 ", Amount - " + payment.getPaymentAmount() +
                 ", Status - " + payment.getPaymentStatus());
