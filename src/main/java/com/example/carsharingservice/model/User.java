@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Table(name = "users")
@@ -24,6 +25,7 @@ public class User {
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false)
+    @ToString.Exclude
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
