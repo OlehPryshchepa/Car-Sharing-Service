@@ -1,5 +1,6 @@
-# 🚘 CAR SHARING SERVICE (group project)🚘
-
+<h1 align="center">
+   🚘 CAR SHARING SERVICE (group project)🚘
+</h1>
 
 ## 📄 Project Description
 
