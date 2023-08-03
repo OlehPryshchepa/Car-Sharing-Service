@@ -1,7 +1,5 @@
 package com.example.carsharingservice.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.example.carsharingservice.service.NotificationService;
 import com.example.carsharingservice.service.UserService;
 import java.util.Optional;
@@ -22,7 +20,6 @@ public class TelegramNotificationService extends TelegramLongPollingBot implemen
     @Value("${bot.token}")
     private String token;
     private final UserService userService;
-    public Map<Long, Long> userChatId = new HashMap<>();//todo save data in service
 
     public TelegramNotificationService(UserService userService) {
         this.userService = userService;
@@ -53,8 +50,11 @@ public class TelegramNotificationService extends TelegramLongPollingBot implemen
         }
     }
 
-    public void sendTelegramMessage(User user, String message) {//+PUBLIC USER //todo cs-44
-
+    public void sendTelegramMessage(User user, String message) {
+        sendMessage(SendMessage.builder()
+                .chatId(user.getChatId())
+                .text(message)
+                .build());
     }
 
     private void handleStartCommand(Long chatId) {
