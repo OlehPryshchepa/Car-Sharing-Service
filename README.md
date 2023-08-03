@@ -86,6 +86,9 @@ Notifications come when leases are created, leases are overdue, and payments are
 - Telegram bot: CSTeam3NotificationBot
 - When testing stripe, use a card number, such as 4242 4242 4242 4242
 
+## 🏗️ Project architecture
+![Screenshot](img/img.png)
+
 ### 🛠 Technologies 🛠
 * Java `17`
 * Apache Maven `3.10.1`
