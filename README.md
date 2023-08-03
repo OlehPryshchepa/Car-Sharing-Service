@@ -72,6 +72,9 @@ work of the service administrators and greatly enhance the user experience.
 In this project, we notify clients and managers using a Telegram bot.
 Notifications come when leases are created, leases are overdue, and payments are successful.
 
+## 🏗️ Project architecture
+![Screenshot](img/img.png)
+
 ### 💻How to Run and Test project
 - Clone the repo on GitHub
 - You need to get a token to create a Telegram-bot `https://t.me/BotFather`
