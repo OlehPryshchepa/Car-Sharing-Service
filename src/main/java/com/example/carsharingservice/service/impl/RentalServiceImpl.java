@@ -53,4 +53,9 @@ public class RentalServiceImpl implements RentalService {
         rentalToUpdate.setActualReturnDate(LocalDateTime.now());
         return rentalRepository.save(rentalToUpdate);
     }
+
+    @Override
+    public List<Rental> getOverdueRentals() {
+        return rentalRepository.findAllByActualReturnDateNullAndReturnDateLessThan(LocalDateTime.now());
+    }
 }

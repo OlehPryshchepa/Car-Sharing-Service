@@ -14,4 +14,6 @@ public interface RentalService {
     List<Rental> findByUSerId(Long id, boolean isActive, PageRequest request);
 
     Rental returnCar(Long id);
+
+    List<Rental> getOverdueRentals();
 }

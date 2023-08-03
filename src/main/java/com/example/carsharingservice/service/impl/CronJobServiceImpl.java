@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import com.example.carsharingservice.model.Rental;
-import com.example.carsharingservice.service.NotificationService;
 import com.example.carsharingservice.service.RentalService;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -16,12 +15,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CronJobServiceImpl {
     private RentalService rentalService;
-    private NotificationService notificationService;
+    private TelegramNotificationService notificationService;
 
 
     @Scheduled(fixedDelay = 10000)
     public void cronJobOverdueRentals() {
-        List<Rental> overdueRentals = rentalService.findOverdueRentals();
+        List<Rental> overdueRentals = rentalService.getOverdueRentals();
         overdueRentals.stream()
                 .forEach(rental -> notificationService.sendTelegramMessage(rental.getUser(), getMessage(rental)));
     }
