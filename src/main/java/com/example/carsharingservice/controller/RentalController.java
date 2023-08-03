@@ -3,15 +3,19 @@ package com.example.carsharingservice.controller;
 import com.example.carsharingservice.dto.request.RentalRequestDto;
 import com.example.carsharingservice.dto.response.RentalResponseDto;
 import com.example.carsharingservice.mapper.DtoMapper;
+import com.example.carsharingservice.model.Car;
 import com.example.carsharingservice.model.Rental;
+import com.example.carsharingservice.model.User;
+import com.example.carsharingservice.service.CarService;
 import com.example.carsharingservice.service.RentalService;
+import com.example.carsharingservice.service.UserService;
+import com.example.carsharingservice.service.impl.TelegramNotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,22 +32,23 @@ import org.springframework.web.bind.annotation.RestController;
         + "Contains all the operations that can be performed on a customer/manager.")
 public class RentalController {
     private final RentalService rentalService;
+    private final UserService userService;
+    private final CarService carService;
+    private final TelegramNotificationService telegramNotificationService;
     private final DtoMapper <RentalRequestDto, RentalResponseDto, Rental> rentalMapper;
 
     @Operation(summary = "Add rental", description = "Add rental")
     @PostMapping
     public RentalResponseDto add(@RequestBody RentalRequestDto rentalRequestDto) {
         Rental createdRental = rentalService.save(rentalMapper.mapToModel(rentalRequestDto));
-        //TODO implement telegram notification for createRental
-        //User userFromDb = userService.get(createdRental.getUser().getId());
-        // telegramNotificationService.sendMessage(String
-//                .format(
-//                        "New rental was created.\n"
-//                                + "Rental info: %s\n"
-//                                + "User info: %s\n"
-//                                + "Car info: %s", rentalMapper.mapToDto(createdRental),
-//                        userMapper.mapToDto(userFromDb),
-//                        carService.get(createdRental.getCar().getId())), userFromDb);
+        Car car = carService.get(createdRental.getCar().getId());
+        User user = userService.get(createdRental.getUser().getId());
+        telegramNotificationService.sendTelegramMessage(user, String
+                .format(
+                        "New rental was created.\n"
+                                + "Rental info: %s\n"
+                                + "User info: %s\n"
+                                + "Car info: %s", createdRental, user, car));
         return rentalMapper.mapToDto(createdRental);
     }
 
