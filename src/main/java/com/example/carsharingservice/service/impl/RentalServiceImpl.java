@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RentalServiceImpl implements RentalService {
-
     private final RentalRepository rentalRepository;
     private final CarRepository carRepository;
 
